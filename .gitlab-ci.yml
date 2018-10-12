@@ -1,0 +1,21 @@
+stages:
+  - test
+
+   # -----------------------------------------------------------------------------
+    # Check SRCs 
+    # -----------------------------------------------------------------------------
+alpine:
+  image: alexshcdr/tom-alpine-x86-64 
+  stage: test
+  script:
+    - virtualenv .
+    - source bin/activate
+    - pip3 install twisted autobahn coverage lxml
+    - export PYTHONPATH=$(pwd)/lib/python3.6/site-packages
+
+    - coverage run -m unittest discover test/unit
+    - coverage report
+  tags:
+    - docker
+
+
